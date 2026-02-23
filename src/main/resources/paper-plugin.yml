@@ -1,9 +1,9 @@
 name: SMPCORE
-version: '${project.version}'
+version: '${projectVersion}'
 main: com.smpcore.SMPCorePlugin
 api-version: '1.20'
 authors: [ "SMPCORE" ]
-description: Kotlin Paper plugin for SMP economy/trading/auction configuration.
+description: Paper plugin for SMP economy/trading/auction configuration.
 commands:
   smpconfig:
     description: Manage SMPCORE configuration.

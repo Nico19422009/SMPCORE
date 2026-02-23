@@ -11,15 +11,15 @@ A Minecraft Paper plugin to configure SMP server features.
 ## Build
 Requirements:
 - Java 17+
-- Maven 3.9+
+- Gradle 8+
 
 Build JAR:
 ```bash
-mvn clean package
+gradle clean build
 ```
 
 Output:
-- `target/smpcore-<version>.jar`
+- `build/libs/smpcore-<version>.jar`
 
 ## Test on Paper
 1. Copy the built JAR into your server `plugins/` folder.
