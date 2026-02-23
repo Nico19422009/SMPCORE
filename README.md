@@ -19,8 +19,7 @@ mvn clean package
 ```
 
 Output:
-- `target/smpcore-<version>.jar` (use this file on your server)
-- `target/original-smpcore-<version>.jar` (build intermediate; do not copy this one)
+- `target/smpcore-<version>.jar`
 
 ## Test on Paper
 1. Copy the built JAR into your server `plugins/` folder.
@@ -37,9 +36,3 @@ Output:
 - `messages.yml` — text messages
 - `balances.yml` — economy balances
 - `auctions.yml` — auction listings
-
-### If updates do not show on server
-- Stop server completely.
-- Delete old `SMPCORE` jars from `plugins/` (avoid duplicates).
-- Copy only the newest `target/smpcore-<version>.jar`.
-- Start server again and verify the startup log shows the new version.

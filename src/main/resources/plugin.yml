@@ -1,29 +1,14 @@
 name: SMPCORE
 version: '${project.version}'
 main: com.smpcore.SMPCorePlugin
-api-version: '1.21'
+api-version: '1.20'
 authors: [ "SMPCORE" ]
-description: Configure SMP profile, economy, trading and auction features.
+description: Configure SMP profile and core feature toggles.
 commands:
   smpconfig:
     description: Manage SMPCORE configuration.
-    usage: /smpconfig <reload|status|set>
+    usage: /smpconfig <reload|status>
     aliases: [smpc]
-  balance:
-    description: Show player balance.
-    usage: /balance [player] [currency]
-  pay:
-    description: Pay a player.
-    usage: /pay <player> <amount> [currency]
-  eco:
-    description: Admin economy controls.
-    usage: /eco <set|add|remove> <player> <amount> [currency]
-  trade:
-    description: Trade with another player.
-    usage: /trade <player|accept|pay>
-  ah:
-    description: Auction house command.
-    usage: /ah <sell|browse|buy>
 permissions:
   smpcore.admin:
     description: Access to all admin controls.
