@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -99,7 +98,7 @@ public final class SidebarManager {
 
         Objective objective = scoreboard.getObjective(OBJECTIVE);
         if (objective == null) {
-            objective = scoreboard.registerNewObjective(OBJECTIVE, Criteria.DUMMY, color(settings.sidebarTitle()));
+            objective = scoreboard.registerNewObjective(OBJECTIVE, "dummy", color(settings.sidebarTitle()));
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         } else {
             objective.setDisplayName(color(settings.sidebarTitle()));

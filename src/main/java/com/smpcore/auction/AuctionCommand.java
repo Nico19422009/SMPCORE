@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class AuctionCommand implements CommandExecutor {
     private final AuctionHouseManager auction;
@@ -60,7 +59,7 @@ public final class AuctionCommand implements CommandExecutor {
                 List<AuctionListing> listings = auction.listings().stream()
                         .sorted(Comparator.comparingLong(AuctionListing::createdAt).reversed())
                         .limit(10)
-                        .collect(Collectors.toList());
+                        .toList();
                 sender.sendMessage(Text.c("&6--- Auction Listings ---"));
                 if (listings.isEmpty()) {
                     sender.sendMessage(Text.c("&7No active listings."));
@@ -68,9 +67,6 @@ public final class AuctionCommand implements CommandExecutor {
                 }
                 for (AuctionListing listing : listings) {
                     CurrencyDefinition c = config.settings().findCurrency(listing.currencyId());
-                    if (c == null) {
-                        c = config.settings().primaryCurrency();
-                    }
                     String itemName = listing.item().getType().name();
                     sender.sendMessage(Text.c("&e#" + listing.id() + " &f" + itemName + " &7- &a" + economy.format(listing.price(), c)));
                 }
