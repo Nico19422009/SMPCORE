@@ -1,0 +1,20 @@
+serverProfile:
+  name: "My SMP"
+
+sidebar:
+  enabled: true
+  title: "&6SMP Setup"
+  updateIntervalTicks: 40
+
+features:
+  economy: true
+  trading: true
+  auctionhouse: true
+
+currencies:
+  primary:
+    id: "coins"
+    singular: "Coin"
+    plural: "Coins"
+    symbol: "$"
+  secondary: []
