@@ -59,7 +59,7 @@ public final class TradeManager {
     }
 
     public boolean payInTrade(Player from, Player to, double amount, String currencyId) {
-        CurrencyDefinition currency = config.findCurrency(currencyId);
+        CurrencyDefinition currency = config.settings().findCurrency(currencyId);
         if (currency == null || !economy.enabled()) {
             return false;
         }

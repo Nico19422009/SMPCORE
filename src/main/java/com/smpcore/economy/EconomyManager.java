@@ -91,14 +91,6 @@ public final class EconomyManager {
         return settings().primaryCurrency().id();
     }
 
-    public CurrencyDefinition findCurrency(String id) {
-        return settings().findCurrency(id);
-    }
-
-    public CurrencyDefinition primaryCurrency() {
-        return settings().primaryCurrency();
-    }
-
     public Player findOnlinePlayer(String name) {
         return plugin.getServer().getPlayerExact(name);
     }

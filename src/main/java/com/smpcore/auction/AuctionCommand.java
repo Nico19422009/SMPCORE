@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class AuctionCommand implements CommandExecutor {
     private final AuctionHouseManager auction;
@@ -30,65 +29,61 @@ public final class AuctionCommand implements CommandExecutor {
             sender.sendMessage(Text.c("&cAuction house is disabled."));
             return true;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(Text.c("&cOnly players can use auction house."));
             return true;
         }
-        Player player = (Player) sender;
 
         if (args.length == 0) {
             sender.sendMessage(Text.c("&eUsage: /ah <sell|browse|buy> ..."));
             return true;
         }
 
-        String sub = args[0].toLowerCase();
-        if ("sell".equals(sub)) {
-            if (args.length < 2) {
-                sender.sendMessage(Text.c("&eUsage: /ah sell <price> [currency]"));
-                return true;
-            }
-            double price;
-            try {
-                price = Double.parseDouble(args[1]);
-            } catch (NumberFormatException e) {
-                sender.sendMessage(Text.c("&cPrice must be numeric."));
-                return true;
-            }
-            auction.createListing(player, price, args.length > 2 ? args[2] : null);
-            return true;
-        }
-
-        if ("browse".equals(sub)) {
-            List<AuctionListing> listings = auction.listings().stream()
-                    .sorted(Comparator.comparingLong(AuctionListing::createdAt).reversed())
-                    .limit(10)
-                    .collect(Collectors.toList());
-            sender.sendMessage(Text.c("&6--- Auction Listings ---"));
-            if (listings.isEmpty()) {
-                sender.sendMessage(Text.c("&7No active listings."));
-                return true;
-            }
-            for (AuctionListing listing : listings) {
-                CurrencyDefinition c = config.findCurrency(listing.currencyId());
-                if (c == null) {
-                    c = config.primaryCurrency();
+        switch (args[0].toLowerCase()) {
+            case "sell" -> {
+                if (args.length < 2) {
+                    sender.sendMessage(Text.c("&eUsage: /ah sell <price> [currency]"));
+                    return true;
                 }
-                String itemName = listing.item().getType().name();
-                sender.sendMessage(Text.c("&e#" + listing.id() + " &f" + itemName + " &7- &a" + economy.format(listing.price(), c)));
-            }
-            return true;
-        }
-
-        if ("buy".equals(sub)) {
-            if (args.length < 2) {
-                sender.sendMessage(Text.c("&eUsage: /ah buy <listingId>"));
+                double price;
+                try {
+                    price = Double.parseDouble(args[1]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(Text.c("&cPrice must be numeric."));
+                    return true;
+                }
+                auction.createListing(player, price, args.length > 2 ? args[2] : null);
                 return true;
             }
-            auction.buy(player, args[1]);
-            return true;
+            case "browse" -> {
+                List<AuctionListing> listings = auction.listings().stream()
+                        .sorted(Comparator.comparingLong(AuctionListing::createdAt).reversed())
+                        .limit(10)
+                        .toList();
+                sender.sendMessage(Text.c("&6--- Auction Listings ---"));
+                if (listings.isEmpty()) {
+                    sender.sendMessage(Text.c("&7No active listings."));
+                    return true;
+                }
+                for (AuctionListing listing : listings) {
+                    CurrencyDefinition c = config.settings().findCurrency(listing.currencyId());
+                    String itemName = listing.item().getType().name();
+                    sender.sendMessage(Text.c("&e#" + listing.id() + " &f" + itemName + " &7- &a" + economy.format(listing.price(), c)));
+                }
+                return true;
+            }
+            case "buy" -> {
+                if (args.length < 2) {
+                    sender.sendMessage(Text.c("&eUsage: /ah buy <listingId>"));
+                    return true;
+                }
+                auction.buy(player, args[1]);
+                return true;
+            }
+            default -> {
+                sender.sendMessage(Text.c("&cUnknown ah subcommand."));
+                return true;
+            }
         }
-
-        sender.sendMessage(Text.c("&cUnknown ah subcommand."));
-        return true;
     }
 }

@@ -9,7 +9,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,11 +41,11 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
         Player target;
         String currencyId = null;
         if (args.length == 0) {
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(Text.c("&cConsole must specify player."));
                 return true;
             }
-            target = (Player) sender;
+            target = player;
         } else {
             target = economy.findOnlinePlayer(args[0]);
             if (target == null) {
@@ -58,7 +57,7 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
             }
         }
 
-        CurrencyDefinition currency = economy.findCurrency(currencyId);
+        CurrencyDefinition currency = economy.settings().findCurrency(currencyId);
         if (currency == null) {
             sender.sendMessage(Text.c("&cUnknown currency."));
             return true;
@@ -73,11 +72,10 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Text.c("&cEconomy is disabled."));
             return true;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(Text.c("&cOnly players can pay."));
             return true;
         }
-        Player player = (Player) sender;
         if (args.length < 2) {
             sender.sendMessage(Text.c("&eUsage: /pay <player> <amount> [currency]"));
             return true;
@@ -101,7 +99,7 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        CurrencyDefinition currency = economy.findCurrency(args.length >= 3 ? args[2] : null);
+        CurrencyDefinition currency = economy.settings().findCurrency(args.length >= 3 ? args[2] : null);
         if (currency == null) {
             sender.sendMessage(Text.c("&cUnknown currency."));
             return true;
@@ -139,23 +137,21 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Text.c("&cAmount must be numeric."));
             return true;
         }
-        CurrencyDefinition currency = economy.findCurrency(args.length >= 4 ? args[3] : null);
+        CurrencyDefinition currency = economy.settings().findCurrency(args.length >= 4 ? args[3] : null);
         if (currency == null) {
             sender.sendMessage(Text.c("&cUnknown currency."));
             return true;
         }
         double current = economy.getBalance(target.getUniqueId(), currency.id());
-        if ("set".equals(mode)) {
-            economy.setBalance(target.getUniqueId(), currency.id(), amount);
-        } else if ("add".equals(mode)) {
-            economy.setBalance(target.getUniqueId(), currency.id(), current + amount);
-        } else if ("remove".equals(mode)) {
-            economy.setBalance(target.getUniqueId(), currency.id(), Math.max(0, current - amount));
-        } else {
-            sender.sendMessage(Text.c("&cUnknown action."));
-            return true;
+        switch (mode) {
+            case "set" -> economy.setBalance(target.getUniqueId(), currency.id(), amount);
+            case "add" -> economy.setBalance(target.getUniqueId(), currency.id(), current + amount);
+            case "remove" -> economy.setBalance(target.getUniqueId(), currency.id(), Math.max(0, current - amount));
+            default -> {
+                sender.sendMessage(Text.c("&cUnknown action."));
+                return true;
+            }
         }
-
         sender.sendMessage(Text.c("&aUpdated " + target.getName() + " -> " + economy.format(economy.getBalance(target.getUniqueId(), currency.id()), currency)));
         return true;
     }
@@ -163,8 +159,8 @@ public final class EconomyCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (alias.equalsIgnoreCase("eco") && args.length == 1) {
-            return Arrays.asList("set", "add", "remove");
+            return List.of("set", "add", "remove");
         }
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 }

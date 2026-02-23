@@ -19,11 +19,10 @@ public final class TradeCommand implements CommandExecutor {
             sender.sendMessage(Text.c("&cTrading is disabled in config."));
             return true;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(Text.c("&cOnly players can trade."));
             return true;
         }
-        Player player = (Player) sender;
 
         if (args.length == 0) {
             sender.sendMessage(Text.c("&eUsage: /trade <player|accept|pay>"));
