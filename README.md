@@ -19,8 +19,7 @@ mvn clean package
 ```
 
 Output:
-- `target/smpcore-<version>.jar` (use this file on your server)
-- `target/original-smpcore-<version>.jar` (build intermediate; do not copy this one)
+- `target/smpcore-<version>.jar`
 
 ## Test on Paper
 1. Copy the built JAR into your server `plugins/` folder.

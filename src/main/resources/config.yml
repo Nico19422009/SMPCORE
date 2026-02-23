@@ -11,21 +11,10 @@ features:
   trading: true
   auctionhouse: true
 
-economy:
-  startingBalance: 100.0
-
 currencies:
   primary:
     id: "coins"
     singular: "Coin"
     plural: "Coins"
     symbol: "$"
-  secondary:
-    - id: "gems"
-      singular: "Gem"
-      plural: "Gems"
-      symbol: "♦"
-
-auctionhouse:
-  listingFee: 5.0
-  taxPercent: 10.0
+  secondary: []
