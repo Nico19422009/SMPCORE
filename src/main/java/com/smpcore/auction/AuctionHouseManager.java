@@ -96,27 +96,10 @@ public final class AuctionHouseManager {
                 : data.getConfigurationSection("listings").getKeys(false);
         for (String id : keys) {
             String path = "listings." + id;
-            String sellerRaw = data.getString(path + ".seller");
-            if (sellerRaw == null) {
-                continue;
-            }
-
-            ItemStack item = data.getItemStack(path + ".item");
-            if (item == null || item.getType().isAir()) {
-                continue;
-            }
-
-            UUID sellerId;
-            try {
-                sellerId = UUID.fromString(sellerRaw);
-            } catch (IllegalArgumentException ignored) {
-                continue;
-            }
-
             out.add(new AuctionListing(
                     id,
-                    sellerId,
-                    item,
+                    UUID.fromString(data.getString(path + ".seller")),
+                    data.getItemStack(path + ".item"),
                     data.getDouble(path + ".price"),
                     data.getString(path + ".currency", config.settings().primaryCurrency().id()),
                     data.getLong(path + ".createdAt")
@@ -132,20 +115,7 @@ public final class AuctionHouseManager {
             return false;
         }
 
-        String sellerRaw = data.getString(path + ".seller");
-        if (sellerRaw == null) {
-            buyer.sendMessage(Text.c("&cListing is invalid."));
-            return false;
-        }
-
-        UUID sellerId;
-        try {
-            sellerId = UUID.fromString(sellerRaw);
-        } catch (IllegalArgumentException ignored) {
-            buyer.sendMessage(Text.c("&cListing is invalid."));
-            return false;
-        }
-
+        UUID sellerId = UUID.fromString(data.getString(path + ".seller"));
         if (sellerId.equals(buyer.getUniqueId())) {
             buyer.sendMessage(Text.c("&cYou cannot buy your own listing."));
             return false;
@@ -169,11 +139,6 @@ public final class AuctionHouseManager {
         economy.deposit(sellerId, currency.id(), payout);
 
         ItemStack item = data.getItemStack(path + ".item");
-        if (item == null || item.getType().isAir()) {
-            buyer.sendMessage(Text.c("&cListing item is missing."));
-            return false;
-        }
-
         buyer.getInventory().addItem(item);
         data.set(path, null);
         save();
