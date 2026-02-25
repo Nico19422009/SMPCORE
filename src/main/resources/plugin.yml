@@ -1,0 +1,126 @@
+name: SMPCORE
+version: 1.0.0
+main: by.nicojerema.smpcore.SMPCorePlugin
+api-version: '1.21'
+author: Nico Jerema
+description: SMPCORE server core plugin with ranks, tablist, and sidebar.
+
+commands:
+  smpcore:
+    description: SMPCORE admin command (includes GitHub update helper)
+    usage: /<command> <reload|economy|rankmenu|currency|worlds|setrank|setcoins|addcoins|setsecondary|addsecondary|update>
+    permission: smpcore.admin
+  tpa:
+    description: Request to teleport to another player
+    usage: /<command> <player>
+    permission: smpcore.tpa
+  tpahere:
+    description: Request another player to teleport to you
+    usage: /<command> <player>
+    permission: smpcore.tpa
+  tpaccept:
+    description: Accept a teleport request
+    usage: /<command>
+    permission: smpcore.tpa
+  tpdeny:
+    description: Deny a teleport request
+    usage: /<command>
+    permission: smpcore.tpa
+  tpcancel:
+    description: Cancel your outgoing teleport request
+    aliases: [tpancel]
+    usage: /<command>
+    permission: smpcore.tpa
+  rtp:
+    description: Random teleport
+    usage: /<command>
+    permission: smpcore.rtp
+  rtpnpc:
+    description: Spawn/remove RTP NPCs
+    usage: /<command> <spawn|remove> <name>
+    permission: smpcore.admin
+  sethome:
+    description: Set one of your 3 homes
+    usage: /<command> [1-3]
+    permission: smpcore.home
+  home:
+    description: Teleport to one of your homes
+    usage: /<command> [1-3|list]
+    permission: smpcore.home
+  delhome:
+    description: Delete one of your homes
+    usage: /<command> [1-3]
+    permission: smpcore.home
+  settings:
+    description: Open your personal settings menu
+    usage: /<command>
+    permission: smpcore.settings
+  stats:
+    description: View your stats or another player's stats
+    usage: /<command> [player]
+    permission: smpcore.stats
+  shop:
+    description: Open the server shop
+    usage: /<command>
+    permission: smpcore.shop
+  shopedit:
+    description: Edit shop items and prices
+    usage: /<command> <setprice|setslot|setamount|remove|reload|open>
+    permission: smpcore.shopedit
+  sell:
+    description: Sell items for coins
+    usage: /<command> [open|all|hand]
+    permission: smpcore.sell
+  pay:
+    description: Pay coins to another player
+    usage: /<command> <player> <amount>
+    permission: smpcore.pay
+  invsee:
+    description: View another player's inventory
+    usage: /<command> <player>
+    permission: smpcore.invsee
+  echestsee:
+    description: View another player's ender chest
+    usage: /<command> <player>
+    permission: smpcore.echestsee
+
+permissions:
+  smpcore.admin:
+    description: Access to SMPCORE admin commands
+    default: op
+  smpcore.tpa:
+    description: Use /tpa, /tpahere and related commands
+    default: true
+  smpcore.rtp:
+    description: Use /rtp
+    default: true
+  smpcore.home:
+    description: Use /sethome, /home and /delhome
+    default: true
+  smpcore.settings:
+    description: Use /settings
+    default: true
+  smpcore.stats:
+    description: Use /stats
+    default: true
+  smpcore.rtp.bypasscooldown:
+    description: Bypass /rtp cooldown
+    default: op
+  smpcore.shop:
+    description: Use /shop
+    default: true
+  smpcore.shopedit:
+    description: Use /shopedit
+    default: op
+  smpcore.sell:
+    description: Use /sell
+    default: true
+  smpcore.pay:
+    description: Use /pay
+    default: true
+  smpcore.invsee:
+    description: View player inventories
+    default: op
+  smpcore.echestsee:
+    description: View player ender chests
+    default: op

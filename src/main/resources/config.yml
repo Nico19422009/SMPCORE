@@ -1,0 +1,122 @@
+server-name: "PIXELSMP"
+sidebar-title: "&6&l%server_name%"
+sidebar:
+  size: 6
+coins-display-name: "Coins"
+currency:
+  secondary:
+    enabled: false
+    display-name: "Tokens"
+update-interval-ticks: 20
+default-rank: "member"
+first-join-message: "&aWelcome to %server_name%! Your rank is %rank%."
+rank-prefix-format: "%color%[%name%] "
+economy:
+  enabled: true
+  disabled-message: "&cEconomy is disabled on this server."
+  disabled-placeholder: "Disabled"
+  disabled-sidebar-line: "&cEconomy disabled"
+  show-coins-in-sidebar-when-disabled: false
+coins-system:
+  enabled: true
+update:
+  enabled: false
+  download-name: "SMPCORE-update.jar"
+teleport:
+  tpa-timeout-seconds: 60
+  rtp-radius: 1500
+  rtp-attempts: 20
+  rtp-cooldown-seconds: 10
+  rtp-use-world-spawn: true
+
+shop:
+  title: "&6&l%server_name% &8- &eShop"
+  confirm-title: "&8Confirm Purchase"
+  size: 27
+  buy-sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+  items:
+    OAK_LOG:
+      slot: 10
+      amount: 16
+      price: 40
+    IRON_INGOT:
+      slot: 12
+      amount: 8
+      price: 60
+    DIAMOND:
+      slot: 14
+      amount: 2
+      price: 120
+    GOLDEN_APPLE:
+      slot: 16
+      amount: 1
+      price: 90
+
+sell:
+  shop-price-cap:
+    enabled: true
+    max-sell-multiplier-of-shop-price: 0.6
+  use-default-price-only: true
+  stack-bonus:
+    enabled: true
+    full-stack-multiplier: 1.25
+    max-stack-amount: 64
+  generate-full-worth-list: true
+  generated-worth-overwrite-existing: true
+  write-worth-json: true
+  worth-json-file: "item-worths.json"
+  generated-worth-by-rarity:
+    COMMON: 15.0
+    UNCOMMON: 120.0
+    RARE: 900.0
+    EPIC: 15000.0
+  generated-special-worth:
+    ENCHANTED_GOLDEN_APPLE: 300000.0
+  gui-title: "&8Sell Items"
+  gui-size: 54
+  default-price-per-item: 4.0
+  rarity-multipliers:
+    COMMON: 1.0
+    UNCOMMON: 1.8
+    RARE: 3.2
+    EPIC: 6.0
+  blacklist:
+    - BEDROCK
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - STRUCTURE_BLOCK
+    - JIGSAW
+    - STRUCTURE_VOID
+  material-overrides:
+    DIAMOND: 70.0
+    EMERALD: 55.0
+    NETHERITE_INGOT: 350.0
+
+tab:
+  header:
+    - "&6&l%server_name%"
+  footer:
+    - "&fRank: %rank%"
+    - "&fCoins: %coins%"
+    - "&fPlaytime: %playtime%"
+  discord-link: ""
+
+ranks:
+  member:
+    name: "Member"
+    color: "&7"
+    weight: 100
+  vip:
+    name: "VIP"
+    color: "&a"
+    weight: 50
+  mvp:
+    name: "MVP"
+    color: "&b"
+    weight: 25
+  admin:
+    name: "Admin"
+    color: "&c"
+    weight: 10
